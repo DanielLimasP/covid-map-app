@@ -3,9 +3,9 @@ const express = require('express')
 const exhbs= require('express-handlebars')
 const path = require('path')
 const app = express()
+const port = process.env.PORT || 3000
+
 // Settings
-app.set('port', process.env.PORT || 3000)
-app.set('port', process.env.PORT || 3000)
 app.set('views', path.join(__dirname, 'views'))
 app.engine('.hbs', exhbs({
     defaultLayout: 'main',
@@ -20,6 +20,6 @@ app.use('/', map)
 // Static files
 app.use(express.static(path.join(__dirname, 'public'))) 
 //Server Initialize
-app.listen(app.get('port'), ()=>{
-    console.log('App running on PORT ', app.get('port'))
+app.listen(port, ()=>{
+    console.log('App running on PORT ', port)
 })
