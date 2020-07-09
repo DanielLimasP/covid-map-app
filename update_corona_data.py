@@ -58,5 +58,6 @@ def update_repo():
     subprocess.Popen(git_commit, shell = True)
     subprocess.Popen(git_push, shell = True)
 
+# Fix the copying of the fileserinos
 #copy_data()
 update_repo()
