@@ -28,8 +28,10 @@ def copy_data():
             to directory %r
             """ %(filename, covid_map_app_dir))
             shutil.copy2(covid_charts_dir_1/filename, covid_map_app_dir)
-            #git_add = "git add %r" % covid_map_app_dir/filename
-            #subprocess.Popen(git_add, shell = True)
+            d = str(covid_map_app_dir)
+            f = str(filename)
+            git_add = "git add %r/%r" % (d,f)
+            subprocess.Popen(git_add, shell = True)
 
     for folderName, subfolders, filenames in os.walk(covid_charts_dir_2):
         print("The current folder is " + folderName)
@@ -43,8 +45,10 @@ def copy_data():
             to directory %r
             """ %(filename, covid_map_app_dir))
             shutil.copy2(covid_charts_dir_2/filename, covid_map_app_dir)
-            #git_add = "git add %r" % covid_map_app_dir/filename
-            #subprocess.Popen(git_add, shell = True)
+            d = str(covid_map_app_dir)
+            f = str(filename)
+            git_add = "git add %r/%r" % (d,f)
+            subprocess.Popen(git_add, shell = True)
 
 def update_repo():
     dd, mm, yyyy = get_date()
