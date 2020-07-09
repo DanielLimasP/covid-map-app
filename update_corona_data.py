@@ -10,10 +10,12 @@ covid_map_app_dir = p / 'Documents/Workspace/NodeJs/covid-map-app/public/data'
 
 def get_date():
     currentDT = datetime.datetime.now()
+    hour = currentDT.hour
+    minute = currentDT.minute
     yyyy = currentDT.year
     mm = currentDT.month
     dd = currentDT.day
-    return dd, mm, yyyy
+    return hour, minute, dd, mm, yyyy
 
 def copy_data():
     for folderName, subfolders, filenames in os.walk(covid_charts_dir_1):
@@ -51,7 +53,7 @@ def copy_data():
             subprocess.Popen(git_add, shell = True)
 
 def update_repo():
-    dd, mm, yyyy = get_date()
+    hour, minute, dd, mm, yyyy = get_date()
     # We commit the recently changed files...
     git_commit = "git commit -a -m %s/%s/%s" %(dd, mm, yyyy)
     git_push = "git push origin master"
