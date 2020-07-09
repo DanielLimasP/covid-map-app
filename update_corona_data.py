@@ -52,6 +52,7 @@ def copy_data():
             git_add = "git add %r/%r" % (d,f)
             subprocess.Popen(git_add, shell = True)
 
+# Updated update_corona
 def update_repo():
     hour, minute, dd, mm, yyyy = get_date()
     # We commit the recently changed files...
