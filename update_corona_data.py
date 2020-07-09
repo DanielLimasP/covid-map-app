@@ -58,5 +58,5 @@ def update_repo():
     subprocess.Popen(git_commit, shell = True)
     subprocess.Popen(git_push, shell = True)
 
-copy_data()
+#copy_data()
 update_repo()
