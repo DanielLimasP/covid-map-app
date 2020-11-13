@@ -37,7 +37,8 @@ def copy_data():
         public = corona_map_app_dir / 'public'
         if public.exists():
             shutil.rmtree(public)
-        shutil.copytree(corona_charts_dir / 'data', corona_map_app_dir / 'public')
+        shutil.copytree(corona_charts_dir / 'data', corona_map_app_dir / 'public' / 'data')
+        shutil.copytree(corona_charts_dir / 'deps', corona_map_app_dir / 'public'/ 'deps')
     else:
         print("At least one of the needed folders is absent. Please relocate it or clone the repository again")
 
