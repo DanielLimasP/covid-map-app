@@ -1,5 +1,5 @@
 # Script to auto-update the info of the app
-# Made by me
+# Made by me. Now with fancy shmancy ANSI colors!
 
 import subprocess
 import shutil, os
