@@ -57,7 +57,8 @@ def update_repo():
     if len(str(minute)) == 1:
         minute = "0" + str(minute)
     d = "{}:{} {} {} {}".format(hour, minute, dd, mm, yyyy)
-    print(CYAN + "The current time and date is: " + LIGHT_GRAY + "{}:{} {} {} {} ".format(hour, minute, dd, mm, yyyy))
+    print(CYAN + "The current time and date is: {}:{} {} {} {} ".format(hour, minute, dd, mm, yyyy))
+    print(LIGHT_GRAY)
     # Commit and display the status of the repo
     subprocess.Popen("git add *", shell=True)
     time.sleep(2)
