@@ -50,12 +50,15 @@ def update_repo():
     d = "{}:{} {} {} {}".format(hour, minute, dd, mm, yyyy)
     #print("The date is: {}:{} {} {} {} ".format(hour, minute, dd, mm, yyyy))
     # Commit and display the status of the repo
+    subprocess.Popen("git status", shell = True)
+    time.sleep(2)
     subprocess.Popen("git add *", shell = True)
     time.sleep(2)
     subprocess.Popen("git commit -a -m \"{}:{}/{}/{}/{}\"".format(hour, minute, dd, mm, yyyy), shell = True)
     time.sleep(2)
     subprocess.Popen("git push origin master", shell = True)
-
+    time.sleep(4)
+    
 if __name__ == "__main__":
     copy_data()
     display_files()
