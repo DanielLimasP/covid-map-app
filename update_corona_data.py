@@ -21,7 +21,7 @@ def get_date():
 def display_files():
     # Display the files inside data folder of covid-charts
     print()
-    for folder, subfolders, files in os.walk(corona_map_app_dir / 'public' ):
+    for folder, subfolders, files in os.walk(corona_map_app_dir / 'public' / 'data'):
         print("Folder {}".format(folder))
 
         for subfolder_file in subfolders:
