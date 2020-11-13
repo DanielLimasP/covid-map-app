@@ -68,6 +68,7 @@ def update_repo():
     time.sleep(2)
     subprocess.Popen("git push origin master", shell=True)
     time.sleep(14)
+    print()
     print(GREEN + "Done!")
     print(LIGHT_GRAY)
 
