@@ -57,7 +57,7 @@ def update_repo():
     subprocess.Popen("git commit -a -m \"{}:{} {}/{}/{}\"".format(hour, minute, dd, mm, yyyy), shell=True)
     time.sleep(2)
     subprocess.Popen("git push origin master", shell=True)
-    time.sleep(8)
+    time.sleep(12)
     print("Done!")
 
 if __name__ == "__main__":
