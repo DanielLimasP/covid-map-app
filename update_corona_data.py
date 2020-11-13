@@ -1,12 +1,12 @@
 import subprocess
 import shutil, os
 import datetime
+import send2trash
 from pathlib import Path
 
-p = Path.home()
-covid_charts_dir_1 = p / 'Documents/Workspace/NodeJs/covid-charts/data/js' 
-covid_charts_dir_2 = p / 'Documents/Workspace/NodeJs/covid-charts/data/json' 
-covid_map_app_dir = p / 'Documents/Workspace/NodeJs/covid-map-app/public/data'
+home_dir = Path.home()
+corona_charts_dir = home_dir / 'Documents/Workspace/nodejs/covid-charts'
+corona_map_app_dir = home_dir / 'Documents/Workspace/nodejs/covid-map-app'
 
 def get_date():
     currentDT = datetime.datetime.now()
@@ -17,50 +17,41 @@ def get_date():
     dd = currentDT.day
     return hour, minute, dd, mm, yyyy
 
+def display_files():
+    # Display the files inside data folder of covid-charts
+    print()
+    for folder, subfolders, files in os.walk(corona_map_app_dir / 'public' ):
+        print("Folder {}".format(folder))
+
+        for subfolder_file in subfolders:
+            print("Subfolder {}".format(subfolder_file))
+
+        for file in files:
+            print("File {}".format(file))
+
+        print()
+
 def copy_data():
-    for folderName, subfolders, filenames in os.walk(covid_charts_dir_1):
-        print("The current folder is " + folderName)
+    if corona_charts_dir.exists() and corona_map_app_dir.exists():
+        public = corona_map_app_dir / 'public'
+        if public.exists():
+            shutil.rmtree(public)
+        shutil.copytree(corona_charts_dir / 'data', corona_map_app_dir / 'public')
+    else:
+        print("At least one of the needed folders is absent. Please relocate it or clone the repository again")
 
-        for subfolder in subfolders:
-            print(subfolder)
+    print("Copying process finished!")
 
-        for filename in filenames:
-            print("""
-            Copying file %r 
-            to directory %r
-            """ %(filename, covid_map_app_dir))
-            shutil.copy2(covid_charts_dir_1/filename, covid_map_app_dir)
-            d = str(covid_map_app_dir)
-            f = str(filename)
-            git_add = "git add %r/%r" % (d,f)
-            subprocess.Popen(git_add, shell = True)
-
-    for folderName, subfolders, filenames in os.walk(covid_charts_dir_2):
-        print("The current folder is " + folderName)
-        
-        for subfolder in subfolders:
-            print(subfolder)
-        
-        for filename in filenames:
-            print("""
-            Copying file %r
-            to directory %r
-            """ %(filename, covid_map_app_dir))
-            shutil.copy2(covid_charts_dir_2/filename, covid_map_app_dir)
-            d = str(covid_map_app_dir)
-            f = str(filename)
-            git_add = "git add %r/%r" % (d,f)
-            subprocess.Popen(git_add, shell = True)
-
-# Updated update_corona
 def update_repo():
     hour, minute, dd, mm, yyyy = get_date()
-    # We commit the recently changed files...
-    git_commit = "git commit -a -m %s/%s/%s" %(dd, mm, yyyy)
-    git_push = "git push origin master"
-    subprocess.Popen(git_commit, shell = True)
-    subprocess.Popen(git_push, shell = True)
+    if len(str(minute)) == 1:
+        minute = "0" + str(minute)
+    #print("The date is: {}:{} {} {} {} ".format(hour, minute, dd, mm, yyyy))
+    # Commit and display the status of the repo
+    subprocess.Popen("git add *", shell = True)
+    subprocess.Popen("git commit -a -m {}".format(hour, minute, dd, mm, yyyy), shell = True)
 
-# Fix the copying of the fileserinos
-#copy_data()
-update_repo()
+if __name__ == "__main__":
+    copy_data()
+    display_files()
+    update_repo()
