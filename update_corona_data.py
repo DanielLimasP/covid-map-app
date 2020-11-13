@@ -1,6 +1,7 @@
 import subprocess
 import shutil, os
 import datetime
+import time
 import send2trash
 from pathlib import Path
 
@@ -46,10 +47,13 @@ def update_repo():
     hour, minute, dd, mm, yyyy = get_date()
     if len(str(minute)) == 1:
         minute = "0" + str(minute)
+    d = "{}:{} {} {} {}".format(hour, minute, dd, mm, yyyy)
     #print("The date is: {}:{} {} {} {} ".format(hour, minute, dd, mm, yyyy))
     # Commit and display the status of the repo
     subprocess.Popen("git add *", shell = True)
-    subprocess.Popen("git commit -a -m {}".format(hour, minute, dd, mm, yyyy), shell = True)
+    time.sleep(2)
+    subprocess.Popen("git commit -a -m \"{}:{} {} {} {}\"".format(hour, minute, dd, mm, yyyy), shell = True)
+    time.sleep(2)
     subprocess.Popen("git push origin master", shell = True)
 
 if __name__ == "__main__":
