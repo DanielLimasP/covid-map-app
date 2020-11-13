@@ -1,3 +1,6 @@
+# Script to auto-update the info of the app
+# Made by me
+
 import subprocess
 import shutil, os
 import datetime
