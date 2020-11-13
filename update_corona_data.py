@@ -1,5 +1,6 @@
 # Script to auto-update the info of the app
 # Made by me. Now with fancy shmancy ANSI colors!
+# TODO: Find a way to get rid of the sleeps
 
 import subprocess
 import shutil, os
@@ -58,6 +59,7 @@ def update_repo():
     if len(str(minute)) == 1:
         minute = "0" + str(minute)
     d = "{}:{} {} {} {}".format(hour, minute, dd, mm, yyyy)
+    print()
     print(CYAN + "The current time and date is: {}:{} {} {} {} ".format(hour, minute, dd, mm, yyyy))
     print(LIGHT_GRAY)
     # Commit and display the status of the repo
