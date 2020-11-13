@@ -52,7 +52,7 @@ def update_repo():
     # Commit and display the status of the repo
     subprocess.Popen("git add *", shell = True)
     time.sleep(2)
-    subprocess.Popen("git commit -a -m \"{}:{} {} {} {}\"".format(hour, minute, dd, mm, yyyy), shell = True)
+    subprocess.Popen("git commit -a -m \"{}:{}/{}/{}/{}\"".format(hour, minute, dd, mm, yyyy), shell = True)
     time.sleep(2)
     subprocess.Popen("git push origin master", shell = True)
 
