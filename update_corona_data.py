@@ -50,6 +50,7 @@ def copy_data():
     else:
         print(RED + "At least one of the needed folders is absent. Please relocate it or clone the repository again")
 
+    print()
     print(CYAN + "Copying process finished!")
 
 def update_repo():
@@ -67,7 +68,7 @@ def update_repo():
     subprocess.Popen("git commit -a -m \"{}:{} {}/{}/{}\"".format(hour, minute, dd, mm, yyyy), shell=True)
     time.sleep(2)
     subprocess.Popen("git push origin master", shell=True)
-    time.sleep(14)
+    time.sleep(18)
     print()
     print(GREEN + "Done!")
     print(LIGHT_GRAY)
