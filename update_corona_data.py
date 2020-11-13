@@ -68,6 +68,7 @@ def update_repo():
     subprocess.Popen("git push origin master", shell=True)
     time.sleep(14)
     print(GREEN + "Done!")
+    print(LIGHT_GRAY)
 
 if __name__ == "__main__":
     copy_data()
