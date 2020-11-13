@@ -31,7 +31,7 @@ def display_files():
     # Display the files inside data folder of covid-charts
     print()
     for folder, subfolders, files in os.walk(corona_map_app_dir / 'public' / 'data'):
-        print(GREEN + "mFolder {}".format(folder))
+        print(GREEN + "Folder {}".format(folder))
 
         for subfolder_file in subfolders:
             print(LIGHT_GRAY + "Subfolder {}".format(subfolder_file))
@@ -59,7 +59,7 @@ def update_repo():
     d = "{}:{} {} {} {}".format(hour, minute, dd, mm, yyyy)
     print(CYAN + "The current time and date is: {}:{} {} {} {} ".format(hour, minute, dd, mm, yyyy))
     # Commit and display the status of the repo
-    subprocess.Popen("git add *", shell=True)
+    subprocess.Popen(LIGHT_GRAY + "git add *", shell=True)
     time.sleep(2)
     subprocess.Popen("git status", shell=True)
     time.sleep(2)
