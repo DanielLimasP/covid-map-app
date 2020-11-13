@@ -589,33 +589,6 @@ am4core.ready(function() {
   title.fill = am4core.color("#ffffff");
   title.y = 20;
 
-  // switch between map and globe
-  var mapGlobeSwitch = mapChart.createChild(am4core.SwitchButton);
-  mapGlobeSwitch.align = "right"
-  mapGlobeSwitch.y = 15;
-  mapGlobeSwitch.leftLabel.text = "Map";
-  mapGlobeSwitch.leftLabel.fill = am4core.color("#ffffff");
-  mapGlobeSwitch.rightLabel.fill = am4core.color("#ffffff");
-  mapGlobeSwitch.rightLabel.text = "Globe";
-  mapGlobeSwitch.verticalCenter = "top";
-
-
-  mapGlobeSwitch.events.on("toggled", function() {
-    if (mapGlobeSwitch.isActive) {
-      mapChart.projection = new am4maps.projections.Orthographic;
-      mapChart.backgroundSeries.show();
-      mapChart.panBehavior = "rotateLongLat";
-      polygonSeries.exclude = [];
-    } else {
-      mapChart.projection = new am4maps.projections.Miller;
-      mapChart.backgroundSeries.hide();
-      mapChart.panBehavior = "move";
-      removeAntarctica(mapData);
-      polygonSeries.data = mapData;
-      polygonSeries.exclude = ["AQ"];
-    }
-  })
-
   // buttons & chart container
   var buttonsAndChartContainer = container.createChild(am4core.Container);
   buttonsAndChartContainer.layout = "vertical";
@@ -702,89 +675,6 @@ am4core.ready(function() {
   slider.startGrip.background.strokeOpacity = 0;
   slider.startGrip.icon.stroke = am4core.color("#ffffff");
   slider.startGrip.background.states.copyFrom(playButton.background.states)
-
-
-  // bubble size slider
-  var sizeSlider = container.createChild(am4core.Slider);
-  sizeSlider.orientation = "vertical";
-  sizeSlider.height = am4core.percent(12);
-  sizeSlider.marginLeft = 25;
-  sizeSlider.align = "left";
-  sizeSlider.valign = "top";
-  sizeSlider.verticalCenter = "middle";
-  sizeSlider.opacity = 0.7;
-  sizeSlider.background.fill = am4core.color("#ffffff");
-  sizeSlider.adapter.add("y", function(y, target) {
-    return container.pixelHeight * (1 - buttonsAndChartContainer.percentHeight / 100) * 0.25;
-  })
-
-  sizeSlider.startGrip.background.fill = activeColor;
-  sizeSlider.startGrip.background.fillOpacity = 0.8;
-  sizeSlider.startGrip.background.strokeOpacity = 0;
-  sizeSlider.startGrip.icon.stroke = am4core.color("#ffffff");
-  sizeSlider.startGrip.background.states.getKey("hover").properties.fill = activeColor;
-  sizeSlider.startGrip.background.states.getKey("down").properties.fill = activeColor;
-  sizeSlider.horizontalCenter = "middle";
-
-
-  sizeSlider.events.on("rangechanged", function() {
-    sizeSlider.startGrip.scale = 0.75 + sizeSlider.start;
-    bubbleSeries.heatRules.getIndex(0).max = 30 + sizeSlider.start * 100;
-    circle.clones.each(function(clone) {
-      clone.radius = clone.radius;
-    })
-  })
-
-  sizeLabel.adapter.add("y", function(y, target) {
-    return container.pixelHeight * (1 - buttonsAndChartContainer.percentHeight / 100) * 0.25;
-  })
-
-  // filter slider
-
-  // bubble size slider
-  var filterSlider = container.createChild(am4core.Slider);
-  filterSlider.orientation = "vertical";
-  filterSlider.height = am4core.percent(28);
-  filterSlider.marginLeft = 25;
-  filterSlider.align = "left";
-  filterSlider.valign = "top";
-  filterSlider.verticalCenter = "middle";
-  filterSlider.opacity = 0.7;
-  filterSlider.background.fill = am4core.color("#ffffff");
-  filterSlider.adapter.add("y", function(y, target) {
-    return container.pixelHeight * (1 - buttonsAndChartContainer.percentHeight / 100) * 0.7;
-  })
-
-  filterSlider.startGrip.background.fill = activeColor;
-  filterSlider.startGrip.background.fillOpacity = 0.8;
-  filterSlider.startGrip.background.strokeOpacity = 0;
-  filterSlider.startGrip.icon.stroke = am4core.color("#ffffff");
-  filterSlider.startGrip.background.states.getKey("hover").properties.fill = activeColor;
-  filterSlider.startGrip.background.states.getKey("down").properties.fill = activeColor;
-  filterSlider.horizontalCenter = "middle";
-  filterSlider.start = 1;
-
-
-  filterSlider.events.on("rangechanged", function() {
-    var maxValue = max[currentType] * filterSlider.start + 1;
-    if (!isNaN(maxValue) && bubbleSeries.inited) {
-      bubbleSeries.heatRules.getIndex(0).maxValue = maxValue;
-      circle.clones.each(function(clone) {
-        if (clone.dataItem.value > maxValue) {
-          clone.dataItem.hide();
-        }
-        else {
-          clone.dataItem.show();
-        }
-        clone.radius = clone.radius;
-      })
-    }
-  })
-
-  filterLabel.adapter.add("y", function(y, target) {
-    return container.pixelHeight * (1 - buttonsAndChartContainer.percentHeight / 100) * 0.7;
-  })
-
 
 
   // play behavior
