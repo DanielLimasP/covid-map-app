@@ -616,55 +616,6 @@ am4core.ready(function() {
     }
   })
 
-
-  // switch between map and globe
-  var absolutePerCapitaSwitch = mapChart.createChild(am4core.SwitchButton);
-  absolutePerCapitaSwitch.align = "center"
-  absolutePerCapitaSwitch.y = 15;
-  absolutePerCapitaSwitch.leftLabel.text = "Absolute";
-  absolutePerCapitaSwitch.leftLabel.fill = am4core.color("#ffffff");
-  absolutePerCapitaSwitch.rightLabel.fill = am4core.color("#ffffff");
-  absolutePerCapitaSwitch.rightLabel.text = "Per Capita";
-  absolutePerCapitaSwitch.rightLabel.interactionsEnabled = true;
-  absolutePerCapitaSwitch.rightLabel.tooltipText = "When calculating max value, countries with population less than 100.000 are not included."
-  absolutePerCapitaSwitch.verticalCenter = "top";
-
-
-  absolutePerCapitaSwitch.events.on("toggled", function() {
-    if (absolutePerCapitaSwitch.isActive) {
-      bubbleSeries.hide(0);
-      perCapita = true;
-      bubbleSeries.interpolationDuration = 0;
-      polygonSeries.heatRules.getIndex(0).max = colors[currentType];
-      polygonSeries.heatRules.getIndex(0).maxValue = maxPC[currentType];
-      polygonSeries.mapPolygons.template.applyOnClones = true;
-
-      sizeSlider.hide()
-      filterSlider.hide();
-      sizeLabel.hide();
-      filterLabel.hide();
-
-      updateCountryTooltip();
-
-    } else {
-      perCapita = false;
-      polygonSeries.interpolationDuration = 0;
-      bubbleSeries.interpolationDuration = 1000;
-      bubbleSeries.show();
-      polygonSeries.heatRules.getIndex(0).max = countryColor;
-      polygonSeries.mapPolygons.template.tooltipText = undefined;
-      sizeSlider.show()
-      filterSlider.show();
-      sizeLabel.show();
-      filterLabel.show();
-    }
-    polygonSeries.mapPolygons.each(function(mapPolygon) {
-      mapPolygon.fill = mapPolygon.fill;
-      mapPolygon.defaultState.properties.fill = undefined;
-    })
-  })
-
-
   // buttons & chart container
   var buttonsAndChartContainer = container.createChild(am4core.Container);
   buttonsAndChartContainer.layout = "vertical";
@@ -784,22 +735,6 @@ am4core.ready(function() {
     })
   })
 
-
-  var sizeLabel = container.createChild(am4core.Label);
-  sizeLabel.text = "max bubble size *";
-  sizeLabel.fill = am4core.color("#ffffff");
-  sizeLabel.rotation = 90;
-  sizeLabel.fontSize = "10px";
-  sizeLabel.fillOpacity = 0.5;
-  sizeLabel.horizontalCenter = "middle";
-  sizeLabel.align = "left"
-  sizeLabel.paddingBottom = 40;
-  sizeLabel.tooltip.setBounds({ x: 0, y: 0, width: 200000, height: 200000 })
-  sizeLabel.tooltip.label.wrap = true;
-  sizeLabel.tooltip.label.maxWidth = 300;
-  sizeLabel.tooltipText = "Some countries have so many cases that bubbles for countries with smaller values often look the same even if there is a significant difference between them. This slider can be used to increase maximum size of a bubble so that when you zoom in to a region with relatively small values you could compare them anyway."
-  sizeLabel.fill = am4core.color("#ffffff");
-
   sizeLabel.adapter.add("y", function(y, target) {
     return container.pixelHeight * (1 - buttonsAndChartContainer.percentHeight / 100) * 0.25;
   })
@@ -845,22 +780,6 @@ am4core.ready(function() {
       })
     }
   })
-
-
-  var filterLabel = container.createChild(am4core.Label);
-  filterLabel.text = "filter max values *";
-  filterLabel.rotation = 90;
-  filterLabel.fontSize = "10px";
-  filterLabel.fill = am4core.color("#ffffff");
-  filterLabel.fontSize = "0.8em";
-  filterLabel.fillOpacity = 0.5;
-  filterLabel.horizontalCenter = "middle";
-  filterLabel.align = "left"
-  filterLabel.paddingBottom = 40;
-  filterLabel.tooltip.label.wrap = true;
-  filterLabel.tooltip.label.maxWidth = 300;
-  filterLabel.tooltipText = "This filter allows to remove countries with many cases from the map so that it would be possible to compare countries with smaller number of cases."
-  filterLabel.fill = am4core.color("#ffffff");
 
   filterLabel.adapter.add("y", function(y, target) {
     return container.pixelHeight * (1 - buttonsAndChartContainer.percentHeight / 100) * 0.7;
